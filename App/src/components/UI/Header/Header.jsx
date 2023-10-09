@@ -1,12 +1,13 @@
 import React from "react"
 import mealsImage from "../../../assets/meals.jpg"
 import './Header.scss'
+import HeaderCartButton from "./HeaderCart/HeaderCartButton"
 
 const Header = ()=>{
     return <React.Fragment>
         <header class='header'>
             <h1>Meals</h1>
-            <button>Click</button>
+            <HeaderCartButton/>
         </header>
        
         <div class='main-image'>
