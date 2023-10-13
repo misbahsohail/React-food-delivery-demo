@@ -2,13 +2,15 @@ import Header from "./components/Layout/Header/Header";
 import Meals from "./components/Meals/Meals";
 import Cart from "./components/Cart/Cart";
 import { useState } from "react";
+import CartProvider from "./store/Cart/CartProvider";
+
 function App() {
   const [uiState, setUiState] = useState({
     cartVisible: false,
   });
 
   return (
-    <div>
+    <CartProvider>
       <Header
         onCartClicked={() => setUiState({ ...uiState, cartVisible: true })}
       />
@@ -18,7 +20,7 @@ function App() {
       <main>
         <Meals />
       </main>
-    </div>
+    </CartProvider>
   );
 }
 

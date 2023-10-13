@@ -1,8 +1,12 @@
 import "./MealItemForm.scss";
 import Input from "../../UI/Input/Input";
+
 const MealItemForm = ({ id }) => {
+  const submitHandler = (event) => {
+    event.preventHandler();
+  };
   return (
-    <form className="form">
+    <form className="form" onSubmit={submitHandler}>
       <Input
         label="Amount"
         input={{

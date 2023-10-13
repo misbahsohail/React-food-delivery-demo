@@ -1,14 +1,14 @@
 import "./HeaderCartButton.scss";
 import { CartFill } from "react-bootstrap-icons";
 
-const HeaderCartButton = ({ onButtonClick }) => {
+const HeaderCartButton = ({ onButtonClick, cartItems }) => {
   return (
     <button onClick={onButtonClick} class="button">
       <span class="icon">
         <CartFill class="cart-icon" size={22} />
       </span>
       <span>Your cart</span>
-      <span class="badge">3</span>
+      <span class="badge">{cartItems}</span>
     </button>
   );
 };
