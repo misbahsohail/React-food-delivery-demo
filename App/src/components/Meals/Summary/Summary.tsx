@@ -1,8 +1,8 @@
-import  './Summary.scss';
+import "./Summary.scss";
 
-const Summary = () => {
+const Summary: React.FC<any> = () => {
   return (
-    <section className='summary'>
+    <section className="summary">
       <h2>Delicious Food, Delivered To You</h2>
       <p>
         Choose your favorite meal from our broad selection of available meals

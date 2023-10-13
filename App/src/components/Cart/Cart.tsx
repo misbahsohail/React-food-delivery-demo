@@ -1,7 +1,9 @@
 import Modal from "../UI/Modal/Modal";
 import "./Cart.scss";
-
-const Cart = ({ onClose }) => {
+type CartProps = {
+  onClose: () => void;
+};
+const Cart: React.FC<CartProps> = ({ onClose }) => {
   const CartIems = (
     <ul className="cart-items">
       {[{ id: 1, name: "Sushi", amount: 2, price: 2.99 }].map((item) => {

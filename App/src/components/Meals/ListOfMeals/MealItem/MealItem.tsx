@@ -1,6 +1,11 @@
 import MealItemForm from "../../../Forms/MealItemForm/MealItemForm";
 import "./MealItem.scss";
-const MealItem = ({ meal }) => {
+
+type MeanItemProps = {
+  meal: { description: string; name: string; price: number; id: number };
+};
+
+const MealItem: React.FC<MeanItemProps> = ({ meal }) => {
   return (
     <li className="meal">
       <div>

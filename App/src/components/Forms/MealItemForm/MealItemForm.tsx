@@ -1,7 +1,11 @@
 import "./MealItemForm.scss";
 import Input from "../../UI/Input/Input";
 
-const MealItemForm = ({ id }) => {
+type MealItemFormProps = {
+  id: number;
+};
+
+const MealItemForm: React.FC<MealItemFormProps> = ({ id }) => {
   const submitHandler = (event) => {
     event.preventHandler();
   };
