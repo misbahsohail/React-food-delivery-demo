@@ -1,0 +1,14 @@
+$font-family_1: 'Noto Sans JP', sans-serif;
+$background-color_1: #fcfcfc;
+
+@import "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap";
+* {
+	box-sizing: border-box;
+}
+html {
+	font-family: $font-family_1;
+}
+body {
+	margin: 0;
+	background-color: $background-color_1;
+}
