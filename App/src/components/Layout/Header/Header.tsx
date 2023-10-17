@@ -12,7 +12,7 @@ const Header = ({ onCartClicked }) => {
         <h1>Meals</h1>
         <HeaderCartButton
           onButtonClick={onCartClicked}
-          cartItemsCount={cartContext.items.length}
+          cartItemsCount={cartContext.numberCartItems}
         />
       </header>
 
