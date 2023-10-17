@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import MealItemForm from "../../../Forms/MealItemForm/MealItemForm";
 import "./MealItem.scss";
 import CartContext, { Item } from "../../../../store/Cart/CartContext";
@@ -17,8 +17,6 @@ const MealItem: React.FC<MeanItemProps> = ({ meal }) => {
   const mealAddedToCart = (newCount: number) => {
     cartContext.addItem({
       id: meal.id,
-      name: meal.name,
-      price: meal.price,
       amount: newCount,
     });
   };
