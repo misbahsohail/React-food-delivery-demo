@@ -10,7 +10,9 @@ type MeanItemProps = {
 const MealItem: React.FC<MeanItemProps> = ({ meal }) => {
   const cartContext = useContext(CartContext);
 
-  const initAmount = meal.amount;
+  const initAmount = cartContext.items[meal.id]
+    ? cartContext.items[meal.id].amount
+    : 0;
 
   const mealAddedToCart = (newCount: number) => {
     cartContext.addItem({
