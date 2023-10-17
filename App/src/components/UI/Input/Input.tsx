@@ -1,19 +1,22 @@
 import "./Input.scss";
+import { forwardRef } from "react";
 
 type InputProps = {
   label: string;
   input: { [key: string]: any };
 };
 
-const Input: React.FC<InputProps> = ({ label, input }) => {
-  return (
-    <div className="input">
-      <label htmlFor={input.id} className="label">
-        {label}
-      </label>
-      <input {...input} />
-    </div>
-  );
-};
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ label, input }, ref) => {
+    return (
+      <div className="input">
+        <label htmlFor={input.id} className="label">
+          {label}
+        </label>
+        <input {...input} ref={ref} />
+      </div>
+    );
+  }
+);
 
 export default Input;
