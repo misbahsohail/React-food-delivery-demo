@@ -1,19 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./CartItem.scss";
-import { Item } from "../../../store/Cart/CartContext";
+import { Item, ItemAddedInCart } from "../../../store/Cart/CartContext";
+
 type CartItemProps = {
   item: Item;
-  onRemove: () => void;
-  onAdd: (item: Item) => void;
+  onRemove: (item: ItemAddedInCart) => void;
+  onAdd: (item: ItemAddedInCart) => void;
 };
 
 const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onAdd }) => {
-  const { amount, price, name } = item;
+  const { amount, price, name, id } = item;
   const [addCounter, setAddCounter] = useState(amount);
 
   const onAddItem = () => {
+    if (addCounter >= 5) {
+      return;
+    }
     setAddCounter(addCounter + 1);
-    onAdd({ ...item, amount: amount + 1 });
+    onAdd({ id, amount: amount + 1 });
+  };
+
+  const onRemoveItem = () => {
+    setAddCounter(addCounter - 1);
+    onRemove({ id, amount: amount - 1 });
   };
 
   return (
@@ -26,8 +35,13 @@ const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onAdd }) => {
         </div>
       </div>
       <div className="actions">
-        <button onClick={onRemove}>−</button>
-        <button onClick={onAddItem}>+</button>
+        <button onClick={onRemoveItem}>−</button>
+        <button
+          className={addCounter >= 5 ? "disabled" : ""}
+          onClick={onAddItem}
+        >
+          +
+        </button>
       </div>
     </li>
   );

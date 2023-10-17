@@ -1,7 +1,10 @@
 import { useContext } from "react";
 import Modal from "../UI/Modal/Modal";
 import "./Cart.scss";
-import CartContext, { Item } from "../../store/Cart/CartContext";
+import CartContext, {
+  Item,
+  ItemAddedInCart,
+} from "../../store/Cart/CartContext";
 import CartItem from "./CartItem/CartItem";
 type CartProps = {
   onClose: () => void;
@@ -12,10 +15,12 @@ const Cart: React.FC<CartProps> = ({ onClose }) => {
 
   Object.keys(cartContext.items).forEach((mealItemId) => {
     const mealItem = cartContext.items[mealItemId];
-    cartItems.push({ ...mealItem, id: mealItemId });
+    if (mealItem.amount > 0) {
+      cartItems.push({ ...mealItem, id: mealItemId });
+    }
   });
-  const cartItemRemoveHandler = () => {};
-  const cartItemAddHandler = (item) => {
+
+  const cartItemUpdateHandler = (item: ItemAddedInCart) => {
     cartContext.addItem(item);
   };
 
@@ -25,8 +30,8 @@ const Cart: React.FC<CartProps> = ({ onClose }) => {
         return (
           <CartItem
             item={item}
-            onRemove={() => cartItemRemoveHandler}
-            onAdd={(_item) => cartItemAddHandler(_item)}
+            onRemove={(_item) => cartItemUpdateHandler(_item)}
+            onAdd={(_item) => cartItemUpdateHandler(_item)}
           />
         );
       })}

@@ -64,3 +64,8 @@
     background-color: #8a2b06;
     color: white;
 }
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
