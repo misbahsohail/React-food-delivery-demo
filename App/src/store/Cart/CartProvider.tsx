@@ -1,44 +1,95 @@
-import CartContext from "./CartContext";
+import { useReducer } from "react";
+import CartContext, { Item } from "./CartContext";
 
-// const defaultCartState = {
-//   items: [],
-//   totalAmount: 0,
-// };
-// const cartReducer = (state, action) => {
-//   if (action.type === "Add") {
-//     const updatedItems = state.items.concat(action.item);
-//     const updatedTotal = state.totalAmount + action.item.price;
-//     return {
-//       items: updatedItems,
-//       totalAmount: updatedTotal,
-//     };
-//   }
-// };
+const defaultCartState: CartState = {
+  items: {},
+  totalPrice: 0,
+  itemsCount: 0,
+};
+
+type CartAction = {
+  type: "Add" | "Remove";
+  item: Item;
+};
+
+type CartState = {
+  items: { [key: string]: Item };
+  totalPrice: any;
+  itemsCount: number;
+};
+
+function findItemInState(id: string, state: CartState) {
+  return state.items[id];
+}
+
+function computeNewPriceAndCount(
+  state: CartState,
+  { id, amount, price }: Item
+) {
+  const prevTotalCount = state.itemsCount - state.items[id]?.amount || 0;
+
+  const prevPrice = (state.items[id]?.amount || 0) * price;
+  const itemPrice = amount * price;
+  const newPriceTotal = state.totalPrice - prevPrice + itemPrice;
+
+  const totalCount = prevTotalCount + amount;
+
+  return { totalCount, newPriceTotal };
+}
+
+const cartReducerNew = (state: CartState, action: CartAction): CartState => {
+  const { items } = state;
+  const itemInState = findItemInState(action.item.id, state);
+  switch (action.type) {
+    case "Add": {
+      const updatedItems = {
+        ...items,
+        [action.item.id]: itemInState
+          ? { ...itemInState, amount: action.item.amount }
+          : { ...action.item },
+      };
+
+      const { totalCount, newPriceTotal } = computeNewPriceAndCount(
+        state,
+        action.item
+      );
+
+      return {
+        itemsCount: totalCount,
+        totalPrice: newPriceTotal,
+        items: updatedItems,
+      };
+    }
+    case "Remove": {
+      return { ...defaultCartState };
+    }
+
+    default:
+      return {
+        ...defaultCartState,
+      };
+  }
+};
 
 const CartProvider = (props) => {
+  const [cartState, dispatchCartAction] = useReducer(
+    cartReducerNew,
+    defaultCartState
+  );
   const addItemToCart = (item) => {
-    //dispatchCartAction({ type: "Add", item });
+    dispatchCartAction({ type: "Add", item });
   };
-  const removeItemFromCart = (item) => {};
-
-  // const cartContext = {
-  //   items: cartState.items,
-  //   totalAmount: cartState.totalAmount,
-  //   addItem: addItemToCart,
-  //   removeItem: removeItemFromCart,
-  // };
+  const removeItemFromCart = (item) => {
+    dispatchCartAction({ type: "Remove", item });
+  };
 
   const cartContext = {
-    items: [],
-    totalAmount: 0,
+    items: cartState.items,
+    totalPrice: cartState.totalPrice,
+    numberCartItems: cartState.itemsCount,
     addItem: addItemToCart,
     removeItem: removeItemFromCart,
   };
-
-  // const [cartState, dispatchCartAction] = useReducer(
-  //   cartReducer,
-  //   defaultCartState
-  // );
 
   return (
     <CartContext.Provider value={cartContext}>
