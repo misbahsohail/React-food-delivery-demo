@@ -1,4 +1,6 @@
-export const DUMMY_MEALS = [
+import { Item } from "../store/Cart/CartContext";
+
+export const DUMMY_MEALS: Item[] = [
   {
     id: "m1",
     name: "Sushi",
